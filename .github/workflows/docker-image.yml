@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
-env:
-  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   build:
@@ -16,7 +14,7 @@ jobs:
       uses: docker/login-action@v1.10.0
       with:
         username: photopills
-        password: ${{ env.DOCKERHUB_TOKEN }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build Docker image
       run: docker build -f Dockerfile -t photopills/runner:latest .
