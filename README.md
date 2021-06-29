@@ -1,12 +1,14 @@
 # runner-image
 
-A lightweight Docker image that extends docker/compose:alpine with our deps
+A lightweight Docker image that extends docker/compose:alpine with our deps.
 
-https://hub.docker.com/r/photopills/runner
+Source at https://github.com/photopills/runner-image
+Image at https://hub.docker.com/r/photopills/runner
 
-## Build
+## Usage
+
+Just pull our latest tag with:
 
 ```sh
-docker build -f Dockerfile -t photopills/runner:latest .
-docker push photopills/runner:latest
+docker pull photopills/runner-image:latest
 ```
