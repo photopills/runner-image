@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker login
+      uses: docker/login-action@v1.10.0
+      with:
+        username: photopills
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Docker image
+      run: docker build -f Dockerfile -t photopills/runner:latest .
+
+    - name: Push Docker image
+      run: docker push photopills/runner:latest
