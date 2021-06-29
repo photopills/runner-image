@@ -2,6 +2,8 @@
 
 A lightweight Docker image that extends docker/compose:alpine with our deps
 
+https://hub.docker.com/r/photopills/runner
+
 ## Build
 
 ```sh
