@@ -18,7 +18,7 @@ Just pull latest or your desired tag with:
 
 
 ```sh
-docker pull photopills/runner-image:latest
-docker pull photopills/runner-image:alpine
-docker pull photopills/runner-image:python
+docker pull photopills/runner:latest
+docker pull photopills/runner:alpine
+docker pull photopills/runner:python
 ```
