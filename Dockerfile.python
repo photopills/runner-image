@@ -2,7 +2,7 @@
 ### PYTHON BASE ###
 ###################
 
-FROM python:3.9.5-slim-buster AS python-base
+FROM python:3.9.5-slim-buster AS python
 
 WORKDIR /src
 
@@ -28,7 +28,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
 ### BUILDER BASE ###
 ####################
 
-FROM python-base as builder-base
+FROM python-base as python-builder
 
 # TODO: Check what dependencies are not necessary install
 # Currently we need to upgrade base image glibc and libstdc++ because pyastrolib.so
