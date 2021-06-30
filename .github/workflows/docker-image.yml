@@ -16,8 +16,15 @@ jobs:
         username: photopills
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build Docker image
-      run: docker build -f Dockerfile -t photopills/runner:latest .
+    - name: Build & Push Alpine Runner
+      run: |
+        docker build -f Dockerfile -t photopills/runner:alpine .
+        docker tag photopills/runner:alpine photopills/runner:latest
+        docker push photopills/runner:alpine
+        docker push photopills/runner:latest
 
-    - name: Push Docker image
-      run: docker push photopills/runner:latest
+    - name: Build & Push Python Runner
+      run: |
+        docker build -f Dockerfile.python -t photopills/runner:python .
+        docker push photopills/runner:python
+
