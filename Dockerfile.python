@@ -43,16 +43,18 @@ RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.lis
 # ENV POETRY_VERSION=1.1.6
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 
-# GITHUB_TOKEN value must can from build command: --build-args GITHUB_TOKEN=${GITHUB_TOKEN}
-ARG GITHUB_TOKEN
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
-
 # We copy our Python requirements here to cache them
 # and install only runtime deps using poetry
 WORKDIR $PYSETUP_PATH
 
 
 # DISABLED
+
+## GITHUB_TOKEN value must can from build command: --build-args GITHUB_TOKEN=${GITHUB_TOKEN}
+# ARG GITHUB_TOKEN
+# RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+
+
 #COPY ./poetry.lock ./pyproject.toml ./
 #RUN poetry install --no-dev
 #RUN git config --global --unset url."https://${GITHUB_TOKEN}@github.com/".insteadOf
