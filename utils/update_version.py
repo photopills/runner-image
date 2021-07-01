@@ -1,6 +1,4 @@
 """Automatically updates pyproject astrolib.py version"""
-import tempfile
-import os
 from pathlib import Path
 
 import click
