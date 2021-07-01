@@ -19,4 +19,5 @@ RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.lis
     && apt-get install build-essential -qy gdal-bin gcc musl-dev \
         git libffi-dev wait-for-it curl \
     && apt-get clean \
-    && curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+    && curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python \
+    && source $HOME/.poetry/env
