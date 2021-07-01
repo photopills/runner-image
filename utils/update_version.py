@@ -17,7 +17,7 @@ def update_version():
         upgrade_version[-1] = str(int(upgrade_version[-1]) + 1)
         return ".".join(upgrade_version)
 
-    with open(PYPROJECT_FILE, "w+") as f:
+    with open(PYPROJECT_FILE, "r+") as f:
         pyproject = parse(f.read())
         current_version = pyproject["tool"]["poetry"]["version"]
         new_version = get_new_version(current_version)
@@ -30,7 +30,7 @@ def update_version():
 @click.option("--major")
 def main(major=False):
     versions = update_version()
-    print(f"Bumps astrolib.py to {versions['new_version']}")
+    print(versions["new_version"])
 
 
 if __name__ == "__main__":
