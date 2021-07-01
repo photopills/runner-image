@@ -18,11 +18,8 @@ RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.lis
     && apt-get update \
     && apt-get install build-essential -qy gdal-bin gcc musl-dev \
         git libffi-dev wait-for-it curl \
-    && apt-get clean \
-    && curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-    
-ENV PATH "$HOME/.poetry/bin:$PATH"
-
+    && apt-get clean 
+   
 # Provide our base utils (and install their deps)
 ADD ./utils /utils
 RUN pip install -r /utils/requirements.txt
