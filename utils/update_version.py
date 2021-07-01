@@ -15,12 +15,13 @@ def update_version():
         upgrade_version[-1] = str(int(upgrade_version[-1]) + 1)
         return ".".join(upgrade_version)
 
-    with open(PYPROJECT_FILE, "r+") as f:
+    with open(PYPROJECT_FILE) as f:
         pyproject = parse(f.read())
-        current_version = pyproject["tool"]["poetry"]["version"]
-        new_version = get_new_version(current_version)
-        pyproject["tool"]["poetry"]["version"] = new_version
-        f.write(dumps(pyproject))
+        with open(PYPROJECT_FILE, "w+") as f:
+            current_version = pyproject["tool"]["poetry"]["version"]
+            new_version = get_new_version(current_version)
+            pyproject["tool"]["poetry"]["version"] = new_version
+            f.write(dumps(pyproject))
     return {"old_version": current_version, "new_version": new_version}
 
 
