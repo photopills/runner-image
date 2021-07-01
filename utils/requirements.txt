@@ -1,2 +1,2 @@
-tomlkit
-click
+click==8.0.1
+tomlkit==0.7.2
