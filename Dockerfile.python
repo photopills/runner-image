@@ -1,8 +1,8 @@
-###################
-### PYTHON BASE ###
-###################
+#########################
+### PYTHON BASE IMAGE ###
+#########################
 
-FROM python:3.9.5-slim-buster AS python-base
+FROM python:3.9.5-slim-buster
 
 WORKDIR /src
 
@@ -10,44 +10,13 @@ WORKDIR /src
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     # Helps to have better C error exceptions in python
-    PYTHONFAULTHANDLER=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
-
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
-    PYTHONPATH=${PYTHONPATH}:${PWD}
+    PYTHONFAULTHANDLER=1
 
 # TODO: Check what dependencies are not necessary install
 # Currently we need to upgrade base image glibc and libstdc++ because pyastrolib.so
 RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get install build-essential -qy gdal-bin gcc musl-dev \
-    git \
-    libffi-dev wait-for-it curl \
-    && apt-get clean
-
-# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
-# ENV POETRY_VERSION=1.1.6
-RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-
-# We copy our Python requirements here to cache them
-# and install only runtime deps using poetry
-WORKDIR $PYSETUP_PATH
-
-
-# DISABLED
-
-## GITHUB_TOKEN value must can from build command: --build-args GITHUB_TOKEN=${GITHUB_TOKEN}
-# ARG GITHUB_TOKEN
-# RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
-
-
-#COPY ./poetry.lock ./pyproject.toml ./
-#RUN poetry install --no-dev
-#RUN git config --global --unset url."https://${GITHUB_TOKEN}@github.com/".insteadOf
+        git libffi-dev wait-for-it curl \
+    && apt-get clean \
+    && curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
