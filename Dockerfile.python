@@ -20,5 +20,7 @@ RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.lis
         git libffi-dev wait-for-it curl \
     && apt-get clean \
     && curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-
+    
 ENV PATH "$HOME/.poetry/bin:$PATH"
+
+ADD ./utils /utils
