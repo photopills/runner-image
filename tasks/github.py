@@ -19,6 +19,7 @@ async def create_new_release(new_version: str, repo: str):
 
 
 async def get_last_release_tag(repo) -> str:
+    """Return last created tag based on published_at timestamp"""
     token = os.getenv("GITHUB_TOKEN")
     async with aiohttp.ClientSession() as session:
         gh = gh_aiohttp.GitHubAPI(session, "fullonic", oauth_token=token)

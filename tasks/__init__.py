@@ -1,5 +1,6 @@
 import json
 import os
+from types import new_class
 import warnings
 import asyncio
 import time
@@ -9,10 +10,10 @@ import tomlkit
 from invoke import task
 from git import Repo as _Repo
 from .github import create_new_release as gh_create_new_release
-from .github import create_pull_request
+from .github import create_pull_request, get_last_release_tag
 
 
-def repo_version_file(ctx):
+def repo_version_file():
     "Generic resolver to select the appropriated file type"
     pyproject_file = Path(".").parent / "pyproject.toml"
     package_file = Path(".").parent / "package.json"
@@ -105,7 +106,7 @@ def update_astrolib(ctx, new_version):
 
 
 @task
-def update_dependency(ctx, library, new_version):
+def update_dependency(ctx, library):
     def update_astrolib_version(new_version):
         "Update pyproject file version"
         pyproject_file = (Path(".").parent / "pyproject.toml").resolve()
@@ -210,6 +211,8 @@ def update_dependency(ctx, library, new_version):
     ## main
     repo = Repo()
     assert repo.name == library, "Local repository and library name should be the same"
+    # get new release tag from github
+    new_version = asyncio.run(get_last_release_tag(repo.name))
     # update repo
     repo.origin.fetch()
     # create new branch to apply the version update
