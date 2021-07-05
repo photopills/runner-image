@@ -209,6 +209,7 @@ def update_dependency(ctx, library, new_version):
 
     ## main
     repo = Repo()
+    assert repo.name == library, "Local repository and library name should be the same"
     # update repo
     repo.origin.fetch()
     # create new branch to apply the version update
