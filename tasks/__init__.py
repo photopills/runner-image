@@ -13,18 +13,20 @@ from .github import create_new_release as gh_create_new_release
 from .github import create_pull_request, get_last_release_tag
 
 
-def repo_version_file():
+def get_current_repo():
     "Generic resolver to select the appropriated file type"
     pyproject_file = Path(".").parent / "pyproject.toml"
     package_file = Path(".").parent / "package.json"
+    version_file_path = ""
     if pyproject_file.exists():
-        return pyproject_file.resolve()
+        version_file_path = pyproject_file.resolve()
     elif package_file.exists():
-        return package_file.resolve()
+        version_file_path = package_file.resolve()
+
+    return Path(version_file_path).parent.name
 
 
-@task
-def get_current_version(ctx):
+def get_current_version():
     """Returns library version"""
     pyproject_file = Path(".").parent / "pyproject.toml"
     package_file = Path(".").parent / "package.json"
@@ -84,7 +86,13 @@ def update_astrolib_wrapper(ctx, major=False):
 
 
 @task
-def create_new_release(version, repo):
+def create_new_release():
+    """Create a new library release
+    
+    Currently can do the release for astrolib.py and astrolib3.js
+    """
+    repo = get_current_repo()
+    version = get_current_version()
     asyncio.run(gh_create_new_release(version, repo))
 
 
