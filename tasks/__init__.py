@@ -1,11 +1,15 @@
 import json
 import os
 import warnings
+import asyncio
+import time
 from pathlib import Path
 
 import tomlkit
 from invoke import task
 from git import Repo as _Repo
+from .github import create_new_release as gh_create_new_release
+from .github import create_pull_request
 
 
 def repo_version_file(ctx):
@@ -79,7 +83,12 @@ def update_astrolib_wrapper(ctx, major=False):
 
 
 @task
-def update_astrolib_(ctx, new_version):
+def create_new_release(version, repo):
+    asyncio.run(gh_create_new_release(version, repo))
+
+
+@task
+def update_astrolib(ctx, new_version):
     def update_astrolib_version(new_version):
         pyproject_file = (Path(".").parent / "pyproject.toml").resolve()
         with open(pyproject_file) as f:
@@ -91,6 +100,7 @@ def update_astrolib_(ctx, new_version):
         return {"old_version": old_version, "new_version": new_version}
 
     versions = update_astrolib_version(new_version)
+    # create new release
     print(versions["new_version"])
 
 
@@ -152,7 +162,7 @@ def update_dependency(ctx, library, new_version):
             return self.origin
 
         def create_branch(self, new_version):
-            branch_name = f"bumps_to_version_{new_version}"
+            branch_name = f"auto/bumps_to_version_{new_version}"
             return self.local.create_head(branch_name)
 
         def commit_all_changes(self, message):
@@ -197,7 +207,6 @@ def update_dependency(ctx, library, new_version):
                 )
             return self
 
-    # def main(ctx, repo, new_version):
     ## main
     repo = Repo()
     # update repo
@@ -220,3 +229,10 @@ def update_dependency(ctx, library, new_version):
     # fmt: on
     repo.clean_local_repo(branch)
     repo.push(branch, force=True)
+    # create_pull request
+    time.sleep(1)
+    asyncio.run(
+        create_pull_request(
+            branch.name, repo.name, versions["old_version"], versions["new_version"]
+        )
+    )
