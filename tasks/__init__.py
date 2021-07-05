@@ -235,7 +235,7 @@ def update_dependency(ctx, library):
     # fmt: off
     GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
     ctx.run(f"git config --global url.'https://{GITHUB_TOKEN}@github.com/'.insteadOf 'https://github.com/'")  # noqa
-    ctx.run("poetry update")
+    ctx.run("poetry update astrolib")
     ctx.run(f"git config --global --unset url.'https://{GITHUB_TOKEN}@github.com/'.insteadOf") # noqa
     # fmt: on
     repo.clean_local_repo(branch)
