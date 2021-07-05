@@ -45,8 +45,7 @@ def get_current_version():
 @task
 def update_astrolib_wrapper(ctx, major=False):
     def get_new_version(current_version):
-        """Extract version from branch name"""
-        # version format > bump_version_0-0-2
+        """Create a new version number by adding on value to the current minor number"""
         upgrade_version = current_version.split(".")
         upgrade_version[-1] = str(int(upgrade_version[-1]) + 1)
         return ".".join(upgrade_version)
@@ -88,7 +87,7 @@ def update_astrolib_wrapper(ctx, major=False):
 @task
 def create_new_release():
     """Create a new library release
-    
+
     Currently can do the release for astrolib.py and astrolib3.js
     """
     repo = get_current_repo()
