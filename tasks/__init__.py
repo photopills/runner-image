@@ -96,18 +96,9 @@ def create_new_release():
 
 
 @task
-def update_astrolib(ctx, new_version):
-    def update_astrolib_version(new_version):
-        pyproject_file = (Path(".").parent / "pyproject.toml").resolve()
-        with open(pyproject_file) as f:
-            pyproject = tomlkit.parse(f.read())
-        with open(pyproject_file, "w+") as f:
-            old_version = pyproject["tool"]["poetry"]["dependencies"]["astrolib"]["rev"]
-            pyproject["tool"]["poetry"]["dependencies"]["astrolib"]["rev"] = new_version
-            f.write(tomlkit.dumps(pyproject))
-        return {"old_version": old_version, "new_version": new_version}
-
-    versions = update_astrolib_version(new_version)
+def update_project_version(ctx, new_version):
+    """Update global consumer project version"""
+    versions = update_astrolib_wrapper(ctx)
     # create new release
     print(versions["new_version"])
 
