@@ -28,7 +28,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
 ### BUILDER BASE ###
 ####################
 
-FROM python-base as python-builder
+FROM python as python-builder
 
 # TODO: Check what dependencies are not necessary install
 # Currently we need to upgrade base image glibc and libstdc++ because pyastrolib.so
@@ -48,12 +48,13 @@ RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poet
 WORKDIR $PYSETUP_PATH
 
 
-# DISABLED
+############
+# DISABLED #
+############
 
 ## GITHUB_TOKEN value must can from build command: --build-args GITHUB_TOKEN=${GITHUB_TOKEN}
 # ARG GITHUB_TOKEN
 # RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
-
 
 #COPY ./poetry.lock ./pyproject.toml ./
 #RUN poetry install --no-dev
