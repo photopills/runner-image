@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ * ]
 
 jobs:
   build:
@@ -23,8 +23,12 @@ jobs:
         docker push photopills/runner:alpine
         docker push photopills/runner:latest
 
+    - name: Build & Push Alpine Debug Runner
+      run: |
+        docker build -f Dockerfile.debug -t photopills/runner:debug .
+        docker push photopills/runner:debug
+
     - name: Build & Push Python Runner
       run: |
         docker build -f Dockerfile.python -t photopills/runner:python .
         docker push photopills/runner:python
-
