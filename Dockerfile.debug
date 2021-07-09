@@ -1,0 +1,2 @@
+FROM photopills/runner:alpine
+RUN apk add busybox-extras iputils curl wget bash
