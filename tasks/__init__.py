@@ -85,7 +85,7 @@ def update_astrolib_wrapper(ctx, major=False):
 
 
 @task
-def create_new_release():
+def create_new_release(ctx):
     """Create a new library release
 
     Currently can do the release for astrolib.py and astrolib3.js
@@ -96,7 +96,7 @@ def create_new_release():
 
 
 @task
-def update_project_version(ctx, new_version):
+def update_project_version(ctx):
     """Update global consumer project version"""
     versions = update_astrolib_wrapper(ctx)
     # create new release
