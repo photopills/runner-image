@@ -22,9 +22,12 @@ jobs:
         docker tag photopills/runner:alpine photopills/runner:latest
         docker push photopills/runner:alpine
         docker push photopills/runner:latest
+        
+        # Debug image
+        docker build -f Dockerfile.debug -t photopills/runner:debug .
+        docker push photopills/runner:debug
 
     - name: Build & Push Python Runner
       run: |
         docker build -f Dockerfile.python -t photopills/runner:python .
         docker push photopills/runner:python
-
