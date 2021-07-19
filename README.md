@@ -10,6 +10,7 @@ TAG | Description
 `latest` | Alias of the `alpine` tag
 `alpine` | An Alpine linux image with our needed tools (make, git, ...)
 `python` | The latest Python over a Debian Slim linux with our needed tools (with Poetry, make tools, ...)
+`argocd` | ArgoCD binary ready to be used
 `debug` | Extended `alpine` with some debug tools like `ping`, `telnet`, `curl`, `wget`, ...
 
 ## Usage
@@ -20,5 +21,6 @@ Just pull latest or your desired tag with:
 docker pull photopills/runner:latest
 docker pull photopills/runner:alpine
 docker pull photopills/runner:python
+docker pull photopills/runner:argocd
 docker pull photopills/runner:debug
 ```
