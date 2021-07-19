@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ * ]
 
 jobs:
   build:
@@ -31,3 +31,8 @@ jobs:
       run: |
         docker build -f Dockerfile.python -t photopills/runner:python .
         docker push photopills/runner:python
+
+    - name: Build & Push ArgoCD Runner
+      run: |
+        docker build -f Dockerfile.argocd -t photopills/runner:argocd .
+        docker push photopills/runner:argocd
