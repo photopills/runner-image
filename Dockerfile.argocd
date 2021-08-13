@@ -4,3 +4,6 @@ USER root
 # Install ArgoCD binary
 RUN curl -sSL -o /usr/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && \
     chmod +x /usr/bin/argocd
+
+RUN curl -sSL -o /usr/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    chmod +x /usr/bin/kubectl
