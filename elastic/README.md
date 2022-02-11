@@ -32,5 +32,3 @@ To build and deploy the ES image, use the following code:
 3. Deploy image to our docker registry
 
    `sh docker push ${DOCKER_REPO_RUNNER}:${TAG} `
-
-\*\* Helm [Elastic](https://github.com/photopills/helm/blob/master/tools/elastic/values.yaml) chart
