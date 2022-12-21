@@ -7,3 +7,7 @@ RUN curl -sSL -o /usr/bin/argocd https://github.com/argoproj/argo-cd/releases/la
 
 RUN curl -sSL -o /usr/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     chmod +x /usr/bin/kubectl
+
+RUN wget https://github.com/digitalocean/doctl/releases/download/v1.70.0/doctl-1.70.0-linux-amd64.tar.gz && \
+    tar xf doctl-1.70.0-linux-amd64.tar.gz && \
+    mv doctl /usr/local/bin 
