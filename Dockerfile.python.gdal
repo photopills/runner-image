@@ -31,7 +31,7 @@ RUN cd gdal-$GDAL_VERSION \
     && cmake --build . --target install \
     && ls -1 -d /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/* > /tmp/post-install-gdal-so.log
 
-RUN pip install GDAL==3.6.2
+RUN pip install GDAL==$GDAL_VERSION
 
 ## Example to the next build stage:
 
